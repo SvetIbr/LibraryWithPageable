@@ -6,9 +6,7 @@ import com.example.LibraryWithPageable.mapper.BookMapper;
 import com.example.LibraryWithPageable.model.Book;
 import com.example.LibraryWithPageable.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,9 +47,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> getAll(Integer from, Integer size) {
-        Pageable pageable = PageRequest.of(from / size, size,
-                Sort.by("author.surname").ascending());
+    public List<BookDto> getAll(Pageable pageable) {
         return repository.findAll(pageable).stream()
                 .map(mapper::toBookDto)
                 .collect(Collectors.toList());

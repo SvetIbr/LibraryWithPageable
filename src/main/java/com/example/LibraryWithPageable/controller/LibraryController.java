@@ -4,6 +4,7 @@ import com.example.LibraryWithPageable.dto.BookDto;
 import com.example.LibraryWithPageable.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +39,7 @@ public class LibraryController {
     }
 
     @GetMapping()
-    public List<BookDto> findAll(@RequestParam(required = false, defaultValue = "0") Integer from,
-                                 @RequestParam(required = false, defaultValue = "10") Integer size) {
-        return service.getAll(from, size);
+    public List<BookDto> findAll(@RequestParam(required = false) Pageable pageable) {
+        return service.getAll(pageable);
     }
 }
